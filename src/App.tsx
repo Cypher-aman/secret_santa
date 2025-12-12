@@ -104,7 +104,7 @@ interface Participant {
 interface TicketProps {
   picker: Participant;
   target: Participant;
-  innerRef: React.RefObject<HTMLDivElement | null>;
+  innerRef: React.RefObject<HTMLDivElement>;
 }
 
 const Ticket: React.FC<TicketProps> = ({ picker, target, innerRef }) => (
