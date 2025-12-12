@@ -118,19 +118,19 @@ const Ticket: React.FC<TicketProps> = ({ picker, target, innerRef }) => (
     <h3 className="text-gray-500 uppercase tracking-[0.2em] text-sm mt-4">
       Secret Santa 2025
     </h3>
-    <div className="h-px bg-gray-300 w-1/2 mx-auto my-4"></div>
+    <div className="w-1/2 h-px mx-auto my-4 bg-gray-300"></div>
 
     <p className="text-xs font-bold text-gray-400 uppercase">Santa</p>
-    <h2 className="text-xl font-bold text-gray-800 mb-6">{picker.name}</h2>
+    <h2 className="mb-6 text-xl font-bold text-gray-800">{picker.name}</h2>
 
     <p className="text-xs font-bold text-gray-400 uppercase">
       Mission: Buy a gift for
     </p>
-    <h1 className="text-4xl font-black text-red-600 my-4 uppercase font-serif">
+    <h1 className="my-4 font-serif text-4xl font-black text-red-600 uppercase">
       {target.name}
     </h1>
 
-    <div className="flex justify-center gap-4 text-2xl my-4">
+    <div className="flex justify-center gap-4 my-4 text-2xl">
       <span>❄️</span>
       <span>🎄</span>
       <span>❄️</span>
@@ -159,7 +159,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   const [confirmAction, setConfirmAction] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const ADMIN_PASSWORD = 'santa#789';
+  const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
 
   const funnyMessages = [
     'Nice try! Santa is watching you... 👀',
@@ -207,15 +207,15 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
+        <div className="w-full max-w-md p-8 bg-white shadow-xl rounded-xl">
           <div className="flex justify-center mb-6">
-            <div className="bg-red-100 p-4 rounded-full">
+            <div className="p-4 bg-red-100 rounded-full">
               <Lock className="w-8 h-8 text-red-600" />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-center mb-2">Admin Access</h2>
-          <p className="text-center text-gray-500 mb-6">
+          <h2 className="mb-2 text-2xl font-bold text-center">Admin Access</h2>
+          <p className="mb-6 text-center text-gray-500">
             This area is for the Organizer only!
           </p>
 
@@ -225,24 +225,24 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-red-500 outline-none"
+              className="w-full p-3 mb-4 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500"
               autoFocus
             />
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm text-center border border-red-100 animate-pulse">
+              <div className="p-3 mb-4 text-sm text-center text-red-600 border border-red-100 rounded-lg bg-red-50 animate-pulse">
                 {error}
               </div>
             )}
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 transition-colors"
+              className="w-full py-3 font-bold text-white transition-colors bg-red-600 rounded-lg cursor-pointer hover:bg-red-700"
             >
               Unlock Panel
             </button>
             <button
               type="button"
               onClick={goHome}
-              className="w-full mt-4 text-gray-500 text-sm hover:text-gray-800"
+              className="w-full mt-4 text-sm text-gray-500 cursor-pointer hover:text-gray-800"
             >
               Cancel & Go Back
             </button>
@@ -253,39 +253,39 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 bg-gray-50 min-h-screen relative">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+    <div className="relative max-w-4xl min-h-screen p-4 mx-auto md:p-8 bg-gray-50">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-800">
           <KeyRound className="w-6 h-6 text-red-600" /> Admin Dashboard
         </h1>
-        <button
-          onClick={goHome}
-          className="text-blue-600 hover:underline"
-        >
-          ← Back to Game
-        </button>
+          <button
+            onClick={goHome}
+            className="text-blue-600 cursor-pointer hover:underline"
+          >
+            ← Back to Game
+          </button>
       </div>
 
       {confirmAction && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
-            <h3 className="text-lg font-bold mb-2">Are you sure?</h3>
-            <p className="text-gray-600 mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-xl">
+            <h3 className="mb-2 text-lg font-bold">Are you sure?</h3>
+            <p className="mb-4 text-gray-600">
               {confirmAction === 'reset'
                 ? 'This will clear all current matches.'
                 : 'This will delete ALL participants.'}
             </p>
-            <div className="flex gap-2 justify-end">
+            <div className="flex justify-end gap-2">
               <button
                 onClick={() => setConfirmAction(null)}
-                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+                className="px-4 py-2 text-gray-600 rounded hover:bg-gray-100"
               >
                 Cancel
               </button>
               <button
                 onClick={executeAction}
                 disabled={isLoading}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 font-bold"
+                className="px-4 py-2 font-bold text-white bg-red-600 rounded hover:bg-red-700"
               >
                 {isLoading ? 'Processing...' : 'Confirm'}
               </button>
@@ -294,8 +294,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
-        <h3 className="font-bold text-lg mb-4">Add Participant</h3>
+      <div className="p-6 mb-8 bg-white border border-gray-200 shadow-sm rounded-xl">
+        <h3 className="mb-4 text-lg font-bold">Add Participant</h3>
         <form
           onSubmit={handleAdd}
           className="flex gap-4"
@@ -305,32 +305,32 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             placeholder="Enter Name (e.g. Vikram)"
-            className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+            className="flex-1 p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-black font-bold disabled:opacity-50"
+            className="px-6 py-3 font-bold text-white bg-gray-900 rounded-lg cursor-pointer hover:bg-black disabled:opacity-50"
           >
             {isLoading ? '...' : 'Add'}
           </button>
         </form>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="font-bold text-lg">Master Record</h3>
+      <div className="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-bold">Master Record</h3>
           <div className="flex gap-2">
             <button
               onClick={() => setConfirmAction('reset')}
-              className="text-xs bg-yellow-100 text-yellow-800 px-3 py-1 rounded hover:bg-yellow-200 flex items-center gap-1"
+              className="flex items-center gap-1 px-3 py-1 text-xs text-yellow-800 bg-yellow-100 rounded cursor-pointer hover:bg-yellow-200"
             >
               <RefreshCw className="w-3 h-3" /> Reset Draws
             </button>
             <button
               onClick={() => setConfirmAction('clear')}
-              className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded hover:bg-red-200 flex items-center gap-1"
+              className="flex items-center gap-1 px-3 py-1 text-xs text-red-800 bg-red-100 rounded cursor-pointer hover:bg-red-200"
             >
               <Trash2 className="w-3 h-3" /> Delete All
             </button>
@@ -340,7 +340,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-200 text-gray-500 text-sm">
+              <tr className="text-sm text-gray-500 border-b border-gray-200">
                 <th className="p-3">Name</th>
                 <th className="p-3">Has Drawn?</th>
                 <th className="p-3">Is Picked?</th>
@@ -366,27 +366,27 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                     <td className="p-3 font-medium">{p.name}</td>
                     <td className="p-3">
                       {p.has_drawn ? (
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                        <span className="px-2 py-1 text-xs text-green-800 bg-green-100 rounded">
                           Done
                         </span>
                       ) : (
-                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                        <span className="px-2 py-1 text-xs text-gray-600 bg-gray-100 rounded">
                           Waiting
                         </span>
                       )}
                     </td>
                     <td className="p-3">
                       {p.is_picked ? (
-                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                        <span className="px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded">
                           Yes
                         </span>
                       ) : (
-                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                        <span className="px-2 py-1 text-xs text-gray-600 bg-gray-100 rounded">
                           No
                         </span>
                       )}
                     </td>
-                    <td className="p-3 font-mono text-red-600 font-bold">
+                    <td className="p-3 font-mono font-bold text-red-600">
                       {p.picked_who || '-'}
                     </td>
                   </tr>
@@ -525,27 +525,27 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
     return (
       <div className="min-h-screen bg-[#e74c3c] flex flex-col items-center justify-center p-4">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-6xl font-black text-white drop-shadow-md mb-2">
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-4xl font-black text-white md:text-6xl drop-shadow-md">
             SECRET SANTA
           </h1>
-          <p className="text-white/80 text-lg">
+          <p className="text-lg text-white/80">
             Who are you? Click your name to enter.
           </p>
         </div>
 
-        <div className="w-full max-w-4xl flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center w-full max-w-4xl gap-4">
           {participants.length === 0 && (
-            <div className="bg-white/10 p-6 rounded-lg text-white text-center backdrop-blur-sm">
+            <div className="p-6 text-center text-white rounded-lg bg-white/10 backdrop-blur-sm">
               <p>No participants found.</p>
-              <p className="text-sm opacity-75 mt-2">
+              <p className="mt-2 text-sm opacity-75">
                 Go to Admin panel to add people.
               </p>
             </div>
           )}
 
           {pendingUsers.length === 0 && participants.length > 0 && (
-            <div className="bg-white p-6 rounded-lg text-red-600 text-center font-bold text-xl shadow-lg">
+            <div className="p-6 text-xl font-bold text-center text-red-600 bg-white rounded-lg shadow-lg">
               🎉 Everyone has drawn! Game Over.
             </div>
           )}
@@ -554,9 +554,9 @@ const GameScreen: React.FC<GameScreenProps> = ({
             <button
               key={user.id}
               onClick={() => handleLogin(user)}
-              className="bg-white hover:bg-yellow-400 text-gray-800 hover:text-red-900 transition-all transform hover:-translate-y-1 active:scale-95 py-4 px-6 rounded-xl font-bold text-lg shadow-lg flex flex-col items-center min-w-[140px]"
+              className="bg-white hover:bg-yellow-400 text-gray-800 hover:text-red-900 transition-all transform hover:-translate-y-1 active:scale-95 py-4 px-6 rounded-xl font-bold text-lg shadow-lg flex flex-col items-center min-w-[140px] cursor-pointer"
             >
-              <User className="mb-2 w-8 h-8 opacity-50" />
+              <User className="w-8 h-8 mb-2 opacity-50" />
               {user.name}
             </button>
           ))}
@@ -564,7 +564,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
         <button
           onClick={goToAdmin}
-          className="fixed bottom-4 right-4 text-white/50 hover:text-white text-sm flex items-center gap-1"
+          className="fixed flex items-center gap-1 text-sm cursor-pointer bottom-4 right-4 text-white/50 hover:text-white"
         >
           <Lock className="w-4 h-4" /> Go to Admin Panel
         </button>
@@ -578,25 +578,25 @@ const GameScreen: React.FC<GameScreenProps> = ({
         <style>{`::view-transition-group(root) { animation-duration: 0.3s; }`}</style>
 
         {selectedCard && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
-            <div className="bg-white rounded-xl p-8 max-w-sm w-full text-center shadow-2xl animate-in zoom-in-95 duration-200">
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+          <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+            <div className="w-full max-w-sm p-8 text-center duration-200 bg-white shadow-2xl rounded-xl animate-in zoom-in-95">
+              <h3 className="mb-2 text-2xl font-bold text-gray-800">
                 Confirm Selection
               </h3>
-              <p className="text-gray-500 mb-6">
+              <p className="mb-6 text-gray-500">
                 You are about to pick a card. Once confirmed, you{' '}
                 <strong>cannot</strong> change your pick.
               </p>
-              <div className="flex gap-3 justify-center">
+              <div className="flex justify-center gap-3">
                 <button
                   onClick={() => setSelectedCard(null)}
-                  className="flex-1 py-3 px-4 border border-gray-300 rounded-lg text-gray-600 font-bold hover:bg-gray-50"
+                  className="flex-1 px-4 py-3 font-bold text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmPick}
-                  className="flex-1 py-3 px-4 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 shadow-lg"
+                  className="flex-1 px-4 py-3 font-bold text-white bg-red-600 rounded-lg shadow-lg hover:bg-red-700"
                 >
                   Yes, Pick It!
                 </button>
@@ -605,8 +605,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
           </div>
         )}
 
-        <div className="text-center mb-8 z-10">
-          <h2 className="text-3xl font-bold text-white mb-2">
+        <div className="z-10 mb-8 text-center">
+          <h2 className="mb-2 text-3xl font-bold text-white">
             Hello, {currentUser?.name}!
           </h2>
           <div
@@ -625,16 +625,16 @@ const GameScreen: React.FC<GameScreenProps> = ({
         </div>
 
         {availableCards.length === 0 ? (
-          <div className="bg-red-500 text-white p-8 rounded-xl text-center max-w-md shadow-2xl z-10">
+          <div className="z-10 max-w-md p-8 text-center text-white bg-red-500 shadow-2xl rounded-xl">
             <AlertCircle className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Uh oh!</h3>
+            <h3 className="mb-2 text-2xl font-bold">Uh oh!</h3>
             <p>You are the last one and only your name is left!</p>
-            <p className="text-sm opacity-80 mt-4">
+            <p className="mt-4 text-sm opacity-80">
               Please contact the Admin to reset the specific draw.
             </p>
             <button
               onClick={() => setView('login')}
-              className="mt-6 bg-white text-red-600 px-6 py-2 rounded-full font-bold"
+              className="px-6 py-2 mt-6 font-bold text-red-600 bg-white rounded-full"
             >
               Back
             </button>
@@ -676,7 +676,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
                     ${
                       hasShuffled
                         ? 'bg-green-500 text-white cursor-default opacity-50'
-                        : 'bg-yellow-400 text-yellow-900 hover:bg-yellow-300 hover:scale-105 active:scale-95'
+                        : 'bg-yellow-400 text-yellow-900 hover:bg-yellow-300 hover:scale-105 active:scale-95 cursor-pointer'
                     }
                 `}
           >
@@ -704,8 +704,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
   if (view === 'result') {
     return (
-      <div className="min-h-screen bg-gray-900/95 flex flex-col items-center justify-center p-4">
-        <div className="mb-6 text-white text-center animate-pulse">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-900/95">
+        <div className="mb-6 text-center text-white animate-pulse">
           <h2 className="text-2xl font-bold">It's a Match!</h2>
         </div>
 
@@ -715,15 +715,15 @@ const GameScreen: React.FC<GameScreenProps> = ({
           innerRef={ticketRef}
         />
 
-        <div className="mt-8 flex flex-col gap-4 w-full max-w-xs">
+        <div className="flex flex-col w-full max-w-xs gap-4 mt-8">
           <button
             onClick={handleDownload}
-            className="bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-lg font-bold shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95"
+            className="flex items-center justify-center gap-2 px-6 py-4 font-bold text-white transition-transform bg-green-500 rounded-lg shadow-lg hover:bg-green-600 active:scale-95"
           >
             <Download className="w-5 h-5" /> Save Image
           </button>
 
-          <p className="text-white/50 text-xs text-center">
+          <p className="text-xs text-center text-white/50">
             Please save the image immediately.
             <br />
             Once you leave this screen, it's gone!
@@ -731,7 +731,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
           <button
             onClick={() => setView('login')}
-            className="mt-4 text-gray-400 hover:text-white text-sm"
+            className="mt-4 text-sm text-gray-400 hover:text-white"
           >
             Return to Home
           </button>
